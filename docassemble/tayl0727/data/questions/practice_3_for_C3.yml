@@ -1,0 +1,59 @@
+---
+variable name: STperson_info
+use objects: True
+data:
+  - First Name: Stef
+    Last Name: Taylor
+    Age: 20
+    Hobbies: Surfing
+    Do you like pets?: True
+  - First Name: Mike
+    Last Name: Taylor
+    Age: 60
+    Hobbies: Fishing
+    Do you like pets?: True
+  - First Name: Heidi
+    Last Name: Taylor
+    Age: 62
+    Hobbies: Gardening
+    Do you like pets?: True
+---
+mandatory: True
+question: Data Table
+subquestion: |
+  ### Table collating all data and responses
+  
+  ${STcolumn_header}
+  ${STdashes}
+  %for STitem in STtable_rows:
+  ${STitem}
+  %endfor
+---
+code: |
+  STcolumn_header = ""
+  
+  for STitem in STperson_info[0]:
+    STcolumn_header += STitem + '|'
+  
+  STcolumn_header = STcolumn_header[:-1]
+---
+code: |
+  STtable_rows = []
+  
+  STcolumn_header
+---
+code: |
+  STdashes = "---"
+  for i in range(len(STperson_info[0]) - 1):
+    STdashes += "|---"
+---
+code: |
+  STtable_rows: []
+  
+  for STitem in STperson_info:
+    MDrow = ""
+    for STkey in STitem: 
+      MDrow += str(STitem[STkey]) + '|'
+    MDrow = MDrow[:-1]
+    STtable_rows.append(MDrow)
+---
